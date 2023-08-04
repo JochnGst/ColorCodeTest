@@ -1,0 +1,60 @@
+﻿@page "/"
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@using ColorCode;
+@using ColorCode.Styling;
+@using System.Text.Encodings.Web;
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+<button @onclick=ConvertJsonToHtml >Convert JSON</button>
+@(new MarkupString(_jsonHtml))
+
+
+@code {
+    private string _jsonString3 = "{\r\n \"raw_causes\": [\r\n      \"Winterglatter Fahrbahn\",\r\n      \"Nicht angepasste Geschwindigkeit\",\r\n      \"test3\"\r\n    ]\r\n      }";
+    private string _jsonHtml;
+    private StyleDictionary _styles;
+    private HtmlFormatter _formatter;
+
+    protected override void OnInitialized()
+    {
+        //_styles = new StyleDictionary();
+        //_styles.Add(new ColorCode.Styling.Style("Json Key")
+        //    {
+        //        Foreground = "#FFCD7008"
+        //    });
+        //_styles.Add(new ColorCode.Styling.Style("Json String")
+        //    {
+        //        Foreground = "#FF008B8B"
+        //    });
+        //_styles.Add(new ColorCode.Styling.Style("Json Number")
+        //    {
+        //        Foreground = "#FF009200"
+        //    });
+        //_styles.Add(new ColorCode.Styling.Style("Json Const")
+        //    {
+        //        Foreground = "#FFAF87ff"
+        //    });
+        //_formatter = new HtmlFormatter(_styles);
+    }
+
+    private void ConvertJsonToHtml()
+    {
+        try
+        {
+            var _formatter = new HtmlFormatter();
+            var language = ColorCode.Languages.FindById("json");
+            _jsonHtml = _formatter.GetHtmlString(_jsonString3, language);
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+}
